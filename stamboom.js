@@ -95,14 +95,13 @@ function sortAge(){
 console.log(familie);
 
 
-function jongste(){
-  return familie[0]
-}
-console.log(jongste());
-
-
 function oudste(){
-  return familie[familie.length - 1]
+  return familie[0]
 }
 console.log(oudste());
 
+
+function jongste(){
+  return familie[familie.length - 1]
+}
+console.log(jongste());
