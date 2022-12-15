@@ -48,3 +48,14 @@ function ageAverage(){
 console.log(ageTotal());
 console.log(ageAverage());
 
+function partOfFam(start, end){
+    let partOfFam = []
+    if(end > familie.length ){
+        end = familie.length
+    }
+    for (let i=start; i < end; i++){
+        partOfFam.push(familie[i])
+    }
+    return partOfFam
+}
+console.log(partOfFam(1,3));
