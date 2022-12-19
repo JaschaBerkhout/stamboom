@@ -1,55 +1,47 @@
 let familie = []
 
-// familie leden als object
-const jascha = {
-  fname : 'Jascha',
-  lname: 'Berkhout',
-  gender: 'v',
-  birthday: '16-02-1995'
-}; 
-console.log(jascha);
+class Persoon {
+  constructor(fname, lname, gender, birthday){
+    this.fname = fname
+    this.lname = lname
+    this.gender = gender
+    this.birthday = birthday
+  }
+  bepaalLeeftijd(){
+    const vandaag = new Date();
+    const geboortedatum = new Date(this.birthday);
+    let leeftijd = vandaag.getFullYear() - geboortedatum.getFullYear();
+    const maand = vandaag.getMonth() - geboortedatum.getMonth();
+    const dag = vandaag.getDate() - geboortedatum.getDate()
+    if (maand < 0 || (maand === 0 && dag < 0)){
+     return leeftijd - 1;
+    } else {
+      return leeftijd
+    }
+  }
+  name(){
+    return this.fname + ' ' + this.lname
+  }
+}
 
-const dunja = {
-  fname : 'Dunja',
-  lname: 'Berkhout',
-  gender: 'v',
-  birthday: '26-05-1997'
-}; 
-console.log(dunja);
+// const jascha = new Persoon('Jascha','Berkhout','v','1995-02-16');
 
-const zoey = {
-  name : 'Zoey',
-  lname: 'Berkhout',
-  gender: 'v',
-  birthday: '27-08-2002'
-}; 
-console.log(zoey);
+// const dunja = new Persoon('Dunja','Berkhout','v','1997-05-26') 
 
-const mama = {
-  name : 'Marry',
-  lname: 'Berkhout',
-  gender: 'v',
-  birthday: '14-12-1696'
-};
-console.log(mama);
+// const zoey = new Persoon('Zoey','Berkhout','v','2002-08-27') 
 
-// parameter wordt duidelijk gemaakt hieronder (objecten)
+// const mama = new Persoon('Marry','van de Ruit','v','1969-12-14')
+
 function addToFamilie(person){
   familie.push(person);
   sortAge()
   updateSamenvatting()
 }
   
-// familie leden toevoegen
-addToFamilie(jascha);
-addToFamilie(dunja);
-addToFamilie(zoey);
-addToFamilie(mama);
-
-
-console.log(familie);
-
-console.log(familie.length);
+// addToFamilie(jascha);
+// addToFamilie(dunja);
+// addToFamilie(zoey);
+// addToFamilie(mama);
 
 function aantalPersonenInStamboom(){
   return familie.length
@@ -64,26 +56,23 @@ function ageTotal(){
   }
   
   return ageTotal;
-}
-console.log(ageTotal());
+};
 
 
 function ageTotal2(){
   let ageTotal = 0
   
-  familie.forEach(familieLid => ageTotal += familieLid.age)
+  familie.forEach(familieLid => ageTotal += familieLid.bepaalLeeftijd())
   
   
   return ageTotal;  
-}
-console.log(ageTotal2());
+};
 
 
 function ageAverage(){
 	
-  return ageTotal() / familie.length; 
-}
-console.log(ageAverage());
+  return ageTotal2() / familie.length; 
+};
 
 // selectie uit familie halen met slice functie uitgeschreven
 function partOfFam(start, end){
@@ -99,26 +88,22 @@ function partOfFam(start, end){
     
     return partOfFam
 }
-console.log(partOfFam(1,3));
+// console.log(partOfFam(1,3));
 
 
 function sortAge(){
   familie = familie.sort((a, b) => b.age - a.age)
-}
-console.log(familie);
+};
 
 
 function oudste(){
   return familie[0]
-}
-console.log(oudste());
+};
 
 
 function jongste(){
   return familie[familie.length - 1]
-}
-console.log(jongste());
-
+};
 
 
 function updateSamenvatting() {
@@ -138,9 +123,10 @@ function updateSamenvatting() {
   }
   }
 
-  samenvatting.innerHTML = samenvattingTekst()
+  samenvatting.innerHTML = samenvattingTekst() + ' De gemiddelde leeftijd van de familie is ' + ageAverage() + ' jaren.'
 }
-// const name = document.getElementById('fname').value + ' ' + document.getElementById('lname').value
+
+const name = document.getElementById('fname').value + ' ' + document.getElementById('lname').value
 
 function formInvullen(){
   const fname = document.getElementById('fname').value
@@ -151,10 +137,20 @@ function formInvullen(){
   }
   const gender = document.querySelector('input[name="gender"]:checked').value
 
-  addToFamilie({  
-    fname : fname,
-    lname : lname,
-    birthday: birthday,
-    gender: gender
-  })
+  addToFamilie(new Persoon(fname,lname,gender,birthday))
+}
+
+
+
+function addToStorage(){
+  window.localStorage.setItem('familie',JSON.stringify(familie))
+}
+
+function getFromStorage(){
+  return JSON.parse(window.localStorage.getItem('familie'))
+}
+
+const readdToFam = () => {
+  getFromStorage().forEach(persoon => addToFamilie(
+    new Persoon(persoon.fname, persoon.lname, persoon.gender,persoon.birthday)))
 }
