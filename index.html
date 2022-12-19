@@ -8,9 +8,47 @@
     <link rel="icon" type="image/x-icon" href="/Users/jascha.berkhout/InternshipJS/stamboom/images/logo.png">
 
     <style>
-        body {
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', 'sans-serif';
+        * {
+        box-sizing: border-box;
         }
+        .header{
+            text-align: center;
+            padding: 20px;
+        }
+        .menu {
+            float: left;
+            width: 20%;
+        }
+
+        .main {
+            width: 60%;
+            padding:  20px;
+        }
+
+        .right {
+            background-color: #bfb8ad;
+            float: right;
+            width: 20%;
+            padding: 15px;
+            margin-top: 7px;
+            text-align: center;
+        }
+        .footer{
+            background-color:#f6f7f3;
+            text-align:center;
+            padding:10px;
+            margin-top:7px;
+        }
+
+        @media only screen and (max-width: 620px) {
+        /* For mobile phones: */
+        .menu, .main, .right,.footer {
+            width: 100%;
+        }
+        }
+      body {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', 'sans-serif';
+            }
         h1 {
             color: #2a3d45;
             text-align: center;
@@ -18,35 +56,38 @@
         }
         h2 {
             color: #2a3d45;
-        }
+            }
         h3 {
             color: #7e3a42;
-        }
+            }
         p {
             padding: 5px;
             margin:auto;
             font-size: small;
-        }
+            }
         table {
             border: 1px solid #bfb8ad;
             border-collapse: collapse;
             text-align: center;
-            width: 300px;
         }
         th {
             background-color: #bfb8ad;
             color: #f6f7f3;
             border-collapse: collapse;
         }
+
     </style>
 
     </head>
     <body>
-        
-        <img src="/Users/jascha.berkhout/InternshipJS/stamboom/images/boom2.png" alt="berkenboom" style="height:200px;float:right">
-       
-        <h1>Stamboom</h1>
-        <hr>
+        <div class="header">
+        <div class="header-image">
+            <img src="/Users/jascha.berkhout/InternshipJS/stamboom/images/boom2.png" alt="berkenboom" style="height:200px;float:right;">
+            </div>
+
+            <h1>Stamboom</h1>
+        </div>
+        <div class="right">
              <!-- <form> -->
                 <label for="fname">Voornaam:</label> 
                 <br>
@@ -73,18 +114,24 @@
                 <br>
                 <input type="button" value="submit" onclick="formInvullen()">
             <!-- </form> -->
-            
-
-        <hr>
-        <p title="hoi"; style="text-align: center">Welkom op deze pagina</p>
+        </div>
+        <div class="menu">
+            <h2>Families</h2>    
+                <p><a href="#berkhout">Berkhout</a></p>
             <br>
-
-        <h2>Families</h2>    
-            <p><a href="#berkhout">Berkhout</a>
+                <p><a href="#vdruit">van de Ruit</a></p>
             <br>
-            <p><a href="#vdruit">van de Ruit</a></p>
-       
-        <h3 id="berkhout">Berkhout</h3>
+                <p><a href="#vdruit">van de Ruit</a></p>
+            <br>
+                <p><a href="#vdruit">van de Ruit</a></p>
+            <br>
+                <p><a href="#vdruit">van de Ruit</a></p>
+            <br>
+            </div>
+            <div class="main">
+                <p title="hoi"; style="text-align: center">Welkom op deze pagina</p>
+                <br>
+            <h3 id="berkhout">Berkhout</h3>
                 <table>
                     <tr>
                         <th>Persoon1</th>
@@ -97,9 +144,23 @@
                     </tr>
                 </table>
 
-        <h3 id="vdruit">van de Ruit</h3>
-   
+            <h3 id="vdruit">van de Ruit</h3>
+            <table>
+                <tr>
+                    <th>Persoon1</th>
+                </tr>
+                <tr>
+                    <td>Jascha</td>
+                </tr>
+                <tr>
+                    <td>27 jaar</td>
+                </tr>
+            </table>
+        </div>
+        <div class="footer">
         <div id="samenvatting">De familie ... bevat x personen.</div>
+    </div>
+
 
 
         <script src="stamboom.js"></script>

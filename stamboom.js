@@ -22,7 +22,7 @@ class Persoon {
   name(){
     return this.fname + ' ' + this.lname
   }
-}
+};
 
 // const jascha = new Persoon('Jascha','Berkhout','v','1995-02-16');
 
@@ -36,7 +36,7 @@ function addToFamilie(person){
   familie.push(person);
   sortAge()
   updateSamenvatting()
-}
+};
   
 // addToFamilie(jascha);
 // addToFamilie(dunja);
@@ -45,17 +45,6 @@ function addToFamilie(person){
 
 function aantalPersonenInStamboom(){
   return familie.length
-}
-
-// 2 manieren om age total te berekenen
-function ageTotal(){
-  let ageTotal = 0
-  
-  for (let i= 0; i < familie.length; i++){
-    ageTotal = ageTotal + familie[i].age
-  }
-  
-  return ageTotal;
 };
 
 
@@ -87,7 +76,7 @@ function partOfFam(start, end){
     }
     
     return partOfFam
-}
+};
 // console.log(partOfFam(1,3));
 
 
@@ -111,7 +100,7 @@ function updateSamenvatting() {
       
   console.log(samenvatting)
 
-  let achternaam = 'Berkhout'
+  let achternaam = ''
   let aantalPersonen = aantalPersonenInStamboom()
 
   let samenvattingTekst = () => {
@@ -123,7 +112,7 @@ function updateSamenvatting() {
   }
   }
 
-  samenvatting.innerHTML = samenvattingTekst() + ' De gemiddelde leeftijd van de familie is ' + ageAverage() + ' jaren.'
+  samenvatting.innerHTML = samenvattingTekst() + ' De gemiddelde leeftijd van de familie is ' + ageAverage() + ' jaar.'
 }
 
 const name = document.getElementById('fname').value + ' ' + document.getElementById('lname').value
@@ -138,19 +127,19 @@ function formInvullen(){
   const gender = document.querySelector('input[name="gender"]:checked').value
 
   addToFamilie(new Persoon(fname,lname,gender,birthday))
-}
-
+};
 
 
 function addToStorage(){
   window.localStorage.setItem('familie',JSON.stringify(familie))
-}
+};
 
 function getFromStorage(){
   return JSON.parse(window.localStorage.getItem('familie'))
-}
+};
 
 const readdToFam = () => {
   getFromStorage().forEach(persoon => addToFamilie(
     new Persoon(persoon.fname, persoon.lname, persoon.gender,persoon.birthday)))
-}
+};
+readdToFam();
