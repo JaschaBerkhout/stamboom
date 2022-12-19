@@ -2,26 +2,34 @@ let familie = []
 
 // familie leden als object
 const jascha = {
-  name : 'Jascha',
-  age : 27
+  fname : 'Jascha',
+  lname: 'Berkhout',
+  gender: 'v',
+  birthday: '16-02-1995'
 }; 
 console.log(jascha);
 
 const dunja = {
-  name : 'Dunja',
-  age : 25
+  fname : 'Dunja',
+  lname: 'Berkhout',
+  gender: 'v',
+  birthday: '26-05-1997'
 }; 
 console.log(dunja);
 
 const zoey = {
   name : 'Zoey',
-  age : 20
+  lname: 'Berkhout',
+  gender: 'v',
+  birthday: '27-08-2002'
 }; 
 console.log(zoey);
 
 const mama = {
   name : 'Marry',
-  age : 53
+  lname: 'Berkhout',
+  gender: 'v',
+  birthday: '14-12-1696'
 };
 console.log(mama);
 
@@ -29,6 +37,7 @@ console.log(mama);
 function addToFamilie(person){
   familie.push(person);
   sortAge()
+  updateSamenvatting()
 }
   
 // familie leden toevoegen
@@ -41,6 +50,10 @@ addToFamilie(mama);
 console.log(familie);
 
 console.log(familie.length);
+
+function aantalPersonenInStamboom(){
+  return familie.length
+}
 
 // 2 manieren om age total te berekenen
 function ageTotal(){
@@ -105,3 +118,43 @@ function jongste(){
   return familie[familie.length - 1]
 }
 console.log(jongste());
+
+
+
+function updateSamenvatting() {
+  const samenvatting = document.getElementById('samenvatting')
+      
+  console.log(samenvatting)
+
+  let achternaam = 'Berkhout'
+  let aantalPersonen = aantalPersonenInStamboom()
+
+  let samenvattingTekst = () => {
+  if (aantalPersonen === 1 ){
+      return `De familie ${achternaam} bevat ${aantalPersonen} persoon.`
+  } 
+  else {
+      return `De familie ${achternaam} bevat ${aantalPersonen} personen.`
+  }
+  }
+
+  samenvatting.innerHTML = samenvattingTekst()
+}
+// const name = document.getElementById('fname').value + ' ' + document.getElementById('lname').value
+
+function formInvullen(){
+  const fname = document.getElementById('fname').value
+  const lname = document.getElementById('lname').value
+  const birthday = document.getElementById('bday').value
+  if(document.querySelector('input[name="gender"]:checked') === null){
+    return 
+  }
+  const gender = document.querySelector('input[name="gender"]:checked').value
+
+  addToFamilie({  
+    fname : fname,
+    lname : lname,
+    birthday: birthday,
+    gender: gender
+  })
+}
