@@ -39,7 +39,6 @@
             padding:10px;
             margin-top:7px;
         }
-
         @media only screen and (max-width: 620px) {
         /* For mobile phones: */
         .menu, .main, .right,.footer {
@@ -74,6 +73,23 @@
             background-color: #bfb8ad;
             color: #f6f7f3;
             border-collapse: collapse;
+        }
+
+        .persoon {
+            border: 1px solid #ddd;
+            padding: 10pt;
+            max-width: 250px;
+            box-shadow: 0 10px 15px rgb(0 0 0 / 20%);
+            border-radius: 5pt;
+            background: aliceblue;
+            display: inline-block;
+        margin: 10px;
+        }
+        .vrouw{
+            background-color: rgb(255, 224, 229);
+        }
+        .man{
+            background-color: rgb(203, 233, 241);
         }
 
     </style>
@@ -112,53 +128,18 @@
                 <label for="vrouw">Vrouw</label>
                 <br>
                 <br>
-                <input type="button" value="submit" onclick="formInvullen()">
+                <input type="button" value="submit" onclick="nieuwPersoonToevoegen()">
             <!-- </form> -->
         </div>
-        <div class="menu">
-            <h2>Families</h2>    
-                <p><a href="#berkhout">Berkhout</a></p>
-            <br>
-                <p><a href="#vdruit">van de Ruit</a></p>
-            <br>
-                <p><a href="#vdruit">van de Ruit</a></p>
-            <br>
-                <p><a href="#vdruit">van de Ruit</a></p>
-            <br>
-                <p><a href="#vdruit">van de Ruit</a></p>
-            <br>
-            </div>
-            <div class="main">
-                <p title="hoi"; style="text-align: center">Welkom op deze pagina</p>
-                <br>
-            <h3 id="berkhout">Berkhout</h3>
-                <table>
-                    <tr>
-                        <th>Persoon1</th>
-                    </tr>
-                    <tr>
-                        <td>Jascha</td>
-                    </tr>
-                    <tr>
-                        <td>27 jaar</td>
-                    </tr>
-                </table>
+        <div>
+            <h3>HALLO</h3>
+        </div>
+        <div id="personen">
 
-            <h3 id="vdruit">van de Ruit</h3>
-            <table>
-                <tr>
-                    <th>Persoon1</th>
-                </tr>
-                <tr>
-                    <td>Jascha</td>
-                </tr>
-                <tr>
-                    <td>27 jaar</td>
-                </tr>
-            </table>
         </div>
         <div class="footer">
         <div id="samenvatting">De familie ... bevat x personen.</div>
+        <div id="melding"></div>
     </div>
 
 
