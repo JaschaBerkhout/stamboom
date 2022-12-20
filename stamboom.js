@@ -36,6 +36,7 @@ function addToFamilie(person){
   familie.push(person);
   sortAge()
   updateSamenvatting()
+  addToStorage()
 };
   
 // addToFamilie(jascha);
@@ -112,7 +113,7 @@ function updateSamenvatting() {
   }
   }
 
-  samenvatting.innerHTML = samenvattingTekst() + ' De gemiddelde leeftijd van de familie is ' + ageAverage() + ' jaar.'
+  samenvatting.innerHTML = samenvattingTekst() + ' De gemiddelde leeftijd van de familie is ' + ageAverage().toFixed(2) + ' jaar.'
 }
 
 const name = document.getElementById('fname').value + ' ' + document.getElementById('lname').value
