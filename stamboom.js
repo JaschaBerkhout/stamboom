@@ -15,7 +15,7 @@ class Familie {
   ageTotal(){
     let ageTotal = 0
     
-    this.personen.forEach(persoon => ageTotal += persoon.bepaalLeeftijd())
+    this.personen.forEach(persoon => ageTotal += persoon.bepaalLeeftijdVanPersoon())
         
     return ageTotal;  
   }
@@ -29,7 +29,7 @@ class Familie {
   }
 
   sortAge(){
-    this.personen = this.personen.sort((a, b) => b.bepaalLeeftijd() - a.bepaalLeeftijd())
+    this.personen = this.personen.sort((a, b) => b.bepaalLeeftijdVanPersoon() - a.bepaalLeeftijdVanPersoon())
   }
   
   oudste(){
@@ -56,40 +56,56 @@ class Familie {
 }
 
 class Persoon {
-  constructor(fname, lname, gender, birthday){
+  constructor(fname, lname, gender, birthday, deathday){
     this.fname = fname
     this.lname = lname
     this.gender = gender
     this.birthday = birthday
+    this.deathday = deathday
   }
-  bepaalLeeftijd(){
-    const vandaag = new Date();
-    const geboortedatum = new Date(this.birthday);
-    let leeftijd = vandaag.getFullYear() - geboortedatum.getFullYear();
-    const maand = vandaag.getMonth() - geboortedatum.getMonth();
-    const dag = vandaag.getDate() - geboortedatum.getDate()
-    if (maand < 0 || (maand === 0 && dag < 0)){
-     return leeftijd - 1;
-    } else {
-      return leeftijd
-    }
-  }
+  
+  bepaalLeeftijdVanPersoon(){
+     const geboortedatum = new Date(this.birthday);
+
+    if (!this.isOverleden()){
+      const vandaag = new Date();
+        return bepaalLeeftijd(geboortedatum,vandaag);        
+    }   
+    const overlijdensdatum = new Date(this.deathday)
+    return bepaalLeeftijd(geboortedatum,overlijdensdatum);
+}
+
   name(){
     return this.fname + ' ' + this.lname
   }
   mooiTekstje() {
     return "<div class='"+ (this.gender === 'm' ? 'man' : 'vrouw')+ " persoon'>"+this.name() +
-     ' <br> '+ this.bepaalLeeftijd()+
+     ' <br> '+ this.bepaalLeeftijdVanPersoon()+
      ' jaar' +
      ' <br>' +
      this.mooieVerjaardag() +
+     ' <br>' +
+     (this.isOverleden() ? '✝ ' + this.deathday : '' ) +
      '</div>';
   }
   mooieVerjaardag() {
     const geboortedatum = new Date(this.birthday)
     return geboortedatum.toLocaleDateString('nl-nl');
   }
+  isOverleden(){
+    return this.deathday !== undefined
+  }
 };
+
+function bepaalLeeftijd(datumStart, datumEind){
+  let leeftijd = datumEind.getFullYear() - datumStart.getFullYear();
+  const maand = datumEind.getMonth() - datumStart.getMonth();
+  const dag = datumEind.getDate() - datumStart.getDate()
+  if (maand < 0 || (maand === 0 && dag < 0)){
+  return leeftijd - 1;
+  } 
+  return leeftijd
+}
 
 function updateSamenvatting() {
   const samenvatting = document.getElementById('samenvatting')
@@ -137,10 +153,12 @@ function nieuwPersoonToevoegen(){
   const lnameElement = document.getElementById('lname');
   const genderElement = document.querySelector('input[name="gender"]:checked');
   const bdayElement = document.getElementById('bday');
+  const ddayElement = document.getElementById('dday');
   
   const fname = fnameElement.value;
   const lname = lnameElement.value;
   const birthday = bdayElement.value;
+  const deathday = ddayElement.value;
   
   if(genderElement === null || fname === '' || lname === '' || birthday === ''){
     algemeneMelding('Leeg invulveld.')
@@ -148,12 +166,13 @@ function nieuwPersoonToevoegen(){
   }
   
   const gender = genderElement.value;
-  const persoon = new Persoon(fname,lname,gender,birthday)
+  const persoon = new Persoon(fname,lname,gender,birthday,deathday)
   DeFamilie.addPersoon(persoon);
   
   fnameElement.value = '';
   lnameElement.value = '';
   bdayElement.value = '';
+  ddayElement.value = '';
   genderElement.checked = false;
 
   meldingNieuwPersoon(persoon);
@@ -176,7 +195,7 @@ const bouwFamilieVanStorage = () => {
   }
   
   personenUitStorage.forEach(persoon => DeFamilie.addPersoon(
-    new Persoon(persoon.fname, persoon.lname, persoon.gender,persoon.birthday))
+    new Persoon(persoon.fname, persoon.lname, persoon.gender,persoon.birthday,persoon.deathday))
   )
 };
 
@@ -195,3 +214,4 @@ function allesVanDeFamilie() {
   DeFamilie.personen.forEach(persoon => result += persoon.mooiTekstje())
   return result;
 }
+
