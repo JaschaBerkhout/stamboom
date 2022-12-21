@@ -81,7 +81,7 @@ class Persoon {
     return "<div class='"+ (this.gender === 'm' ? 'man' : 'vrouw')+ " persoon'>"+this.name() +
      ' <br> '+ this.bepaalLeeftijd()+
      ' jaar' +
-     ' <br>*' +
+     ' <br>' +
      this.mooieVerjaardag() +
      '</div>';
   }

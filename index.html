@@ -32,6 +32,7 @@
             padding: 15px;
             margin-top: 7px;
             text-align: center;
+            width: 50%;
         }
         .footer{
             background-color:#f6f7f3;
@@ -79,17 +80,25 @@
             border: 1px solid #ddd;
             padding: 10pt;
             max-width: 250px;
-            box-shadow: 0 10px 15px rgb(0 0 0 / 20%);
+            box-shadow: 0 10px 10px rgb(0 0 0 / 15%);
             border-radius: 5pt;
             background: aliceblue;
             display: inline-block;
-        margin: 10px;
+            margin: 10px;
         }
         .vrouw{
-            background-color: rgb(255, 224, 229);
+            background-color: #FAF0F2;
+            border: 2px solid #9C072A;
         }
         .man{
-            background-color: rgb(203, 233, 241);
+            background-color: #E5F2FF;
+            border: 2px solid #3E5D7A;
+        }
+        .melding{
+            background-color:#f6f7f3;
+            text-align:center;
+            padding:10px;
+            margin-top:7px;
         }
 
     </style>
@@ -103,6 +112,8 @@
 
             <h1>Stamboom</h1>
         </div>
+        <div class="melding" id="melding"></div>
+        <br>
         <div class="right">
              <!-- <form> -->
                 <label for="fname">Voornaam:</label> 
@@ -132,14 +143,14 @@
             <!-- </form> -->
         </div>
         <div>
-            <h3>HALLO</h3>
+            <h3>Alle personen in de familie</h3>
         </div>
         <div id="personen">
 
         </div>
         <div class="footer">
         <div id="samenvatting">De familie ... bevat x personen.</div>
-        <div id="melding"></div>
+
     </div>
 
 
