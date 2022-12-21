@@ -83,15 +83,16 @@ class Persoon {
      ' <br> '+ this.bepaalLeeftijdVanPersoon()+
      ' jaar' +
      ' <br>' +
-     this.mooieVerjaardag() +
+     this.mooieDatum(this.birthday) +
      ' <br>' +
-     (this.isOverleden() ? '✝ ' + this.deathday : '' ) +
+     (this.isOverleden() ? '✝ ' + this.mooieDatum(this.deathday) : '' ) +
      '</div>';
   }
-  mooieVerjaardag() {
-    const geboortedatum = new Date(this.birthday)
-    return geboortedatum.toLocaleDateString('nl-nl');
+
+  mooieDatum(datum) {
+    return new Date(datum).toLocaleDateString('nl-nl');
   }
+
   isOverleden(){
     return this.deathday !== undefined
   }
