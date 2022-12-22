@@ -69,11 +69,11 @@ class Persoon {
 
     if (!this.isOverleden()){
       const vandaag = new Date();
-        return bepaalLeeftijd(geboortedatum,vandaag);        
-    }   
-    const overlijdensdatum = new Date(this.deathday)
+        return bepaalLeeftijd(geboortedatum,vandaag);       
+    }
+    const overlijdensdatum = new Date(this.deathday);
     return bepaalLeeftijd(geboortedatum,overlijdensdatum);
-}
+  }
 
   name(){
     return this.fname + ' ' + this.lname
@@ -85,7 +85,7 @@ class Persoon {
      ' <br>' +
      this.mooieDatum(this.birthday) +
      ' <br>' +
-     (this.isOverleden() ? '✝ ' + this.mooieDatum(this.deathday) : '' ) +
+     (this.isOverleden() ? '✝ ' + this.mooieDatum(this.deathday) : '') +
      '</div>';
   }
 
@@ -94,7 +94,7 @@ class Persoon {
   }
 
   isOverleden(){
-    return this.deathday !== undefined
+    return this.deathday !== ''
   }
 };
 
@@ -104,7 +104,7 @@ function bepaalLeeftijd(datumStart, datumEind){
   const dag = datumEind.getDate() - datumStart.getDate()
   if (maand < 0 || (maand === 0 && dag < 0)){
   return leeftijd - 1;
-  } 
+  }
   return leeftijd
 }
 
