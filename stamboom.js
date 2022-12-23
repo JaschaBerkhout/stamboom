@@ -1,56 +1,48 @@
 class Familie {
-  constructor(personenUitStorage){
+  constructor(personsFromStorage){
     this.personen = []
-    if(personenUitStorage === null) {
+    if(personsFromStorage === null) {
       return;
     }
-      personenUitStorage.forEach(persoon => {
+      personsFromStorage.forEach(persoon => {
         if(persoon === null) {
           return;
     } 
       this.addPersoon(
-      new Persoon(persoon.fname, persoon.lname, persoon.gender,persoon.birthday,persoon.deathday))
+      new Persoon(persoon.fName, persoon.lName, persoon.gender,persoon.birthday,persoon.deathday))
     })
   }
 
   addPersoon(persoon){
-    persoon.id = this.aantalPersonen()
+    persoon.id = this.numberOfPersons()
     this.personen[persoon.id] = persoon;
-    updateSamenvatting(this.aantalPersonen())
-    updatenVanStamboomWeergave()
+    updateSummary(this.numberOfPersons())
+    updateFamilyTreeOnWebpage()
   }
 
-  aantalPersonen(){
+  numberOfPersons(){
     return this.personen.length
   }
 
-  sortAge(){
+  sortOnBirthday(){
     return this.personen.sort((jong, oud) => jong.birthday - oud.birthday)
-  }
-  
-  oudste(){
-    return this.sortAge()[0]
-  }
-  
-  jongste(){
-    return this.sortAge()[this.aantalPersonen() - 1]
   }
 };
 
 class Persoon {
-  constructor(fname, lname, gender, birthday, deathday){
-    this.fname = fname
-    this.lname = lname
+  constructor(fName, lName, gender, birthday, deathday){
+    this.fName = fName
+    this.lName = lName
     this.gender = gender
     this.birthday = birthday
     this.deathday = deathday
   }
 
   name(){
-    return this.fname + ' ' + this.lname
+    return this.fName + ' ' + this.lName
   }
 
-  bepaalLeeftijd(datumStart, datumEind){
+  getAge(datumStart, datumEind){
     let leeftijd = datumEind.getFullYear() - datumStart.getFullYear();
     const maand = datumEind.getMonth() - datumStart.getMonth();
     const dag = datumEind.getDate() - datumStart.getDate()
@@ -60,33 +52,33 @@ class Persoon {
     return leeftijd
   }
 
-  bepaalLeeftijdVanPersoon(){
+  getAgeOfPerson(){
      const geboortedatum = new Date(this.birthday);
 
-    if (!this.isOverleden()){
+    if (!this.isPassedAway()){
       const vandaag = new Date();
-        return this.bepaalLeeftijd(geboortedatum,vandaag);       
+        return this.getAge(geboortedatum,vandaag);       
     }
     const overlijdensdatum = new Date(this.deathday);
-    return this.bepaalLeeftijd(geboortedatum,overlijdensdatum);
+    return this.getAge(geboortedatum,overlijdensdatum);
   }
 
   personCard() {
     return "<div class='"+ (this.gender === 'm' ? 'man' : 'vrouw')+ " persoon'>"+this.name() +
-     ' <br> '+ this.bepaalLeeftijdVanPersoon()+
+     ' <br> '+ this.getAgeOfPerson()+
      ' jaar' +
      ' <br>* ' +
-     this.mooieDatum(this.birthday) +
+     this.niceDateFormat(this.birthday) +
      ' <br>' +
-     (this.isOverleden() ? '✝ ' + this.mooieDatum(this.deathday) : '') +
+     (this.isPassedAway() ? '✝ ' + this.niceDateFormat(this.deathday) : '') +
      '</div>';
   }
 
-  mooieDatum(datum) {
+  niceDateFormat(datum) {
     return new Date(datum).toLocaleDateString('nl-nl');
   }
 
-  isOverleden(){
+  isPassedAway(){
     return this.deathday !== ''
   }  
 };
@@ -104,82 +96,82 @@ class Database {
   }
  };
 
-function nieuwPersoonToevoegen(){
+function createNewPerson(){
   
-  const fnameElement = document.getElementById('fname');
-  const lnameElement = document.getElementById('lname');
+  const fNameElement = document.getElementById('fname');
+  const lNameElement = document.getElementById('lname');
   const genderElement = document.querySelector('input[name="gender"]:checked');
   const bdayElement = document.getElementById('bday');
   const ddayElement = document.getElementById('dday');
   
-  const fname = fnameElement.value;
-  const lname = lnameElement.value;
+  const fName = fNameElement.value;
+  const lName = lNameElement.value;
   const birthday = bdayElement.value;
   const deathday = ddayElement.value;
   
-  if(genderElement === null || fname === '' || lname === '' || birthday === ''){
-    algemeneMelding('Leeg invulveld.')
+  if(genderElement === null || fName === '' || lName === '' || birthday === ''){
+    generalMessage('Leeg invulveld.')
     return;
   }
   
   const gender = genderElement.value;
-  const persoon = new Persoon(fname,lname,gender,birthday,deathday)
+  const persoon = new Persoon(fName,lName,gender,birthday,deathday)
   DeFamilie.addPersoon(persoon);
   
-  fnameElement.value = '';
-  lnameElement.value = '';
+  fNameElement.value = '';
+  lNameElement.value = '';
   bdayElement.value = '';
   ddayElement.value = '';
   genderElement.checked = false;
 
-  meldingNieuwPersoon(persoon);
+  messageNewPersonCreated(persoon);
 
 };
 
-function updateSamenvatting(aantalPersonen) {
+function updateSummary(numberOfPersons) {
   const samenvatting = document.getElementById('samenvatting')
 
-  let samenvattingTekst = () => {
-    if (aantalPersonen === 1 ){
-      return `De familie bevat nu ${aantalPersonen} persoon.`
+  let summaryText = () => {
+    if (numberOfPersons === 1 ){
+      return `De familie bevat nu ${numberOfPersons} persoon.`
     } 
     else {
-      return `De familie bevat nu ${aantalPersonen} personen.`
+      return `De familie bevat nu ${numberOfPersons} personen.`
     }
   }
-  samenvatting.innerHTML = samenvattingTekst()
+  samenvatting.innerHTML = summaryText()
 };
 
-function algemeneMelding(tekst){
+function generalMessage(tekst){
   const meldingElement = document.getElementById('melding')
   meldingElement.innerHTML = tekst
-  meldingWeghalen()
+  removeMessage()
 };
 
-function meldingWeghalen(){  
+function removeMessage(){  
   setTimeout(() => document.getElementById('melding').innerHTML = '', 5000);
 };
 
-function meldingNieuwPersoon(persoon) {
- algemeneMelding(`${persoon.fname} is toegevoegd aan de familie ${persoon.lname}.`);
+function messageNewPersonCreated(persoon) {
+ generalMessage(`${persoon.fName} is toegevoegd aan de familie ${persoon.lName}.`);
 };
 
-function allesVanDeFamilie() {
+function allOfTheFamily() {
   let result = '';
   DeFamilie.personen.forEach(persoon => result += persoon.personCard())
   return result;
 };
 
-function updatenVanStamboomWeergave(){
+function updateFamilyTreeOnWebpage(){
   const personenElement = document.getElementById('personen');
-  personenElement.innerHTML = allesVanDeFamilie();
+  personenElement.innerHTML = allOfTheFamily();
 };
 
 // begin van de stamboom website
 let DeDatabase = new Database();
-let personenUitStorage = DeDatabase.getAllPersons()
-let DeFamilie = new Familie(personenUitStorage);
-updatenVanStamboomWeergave();
+let personsFromStorage = DeDatabase.getAllPersons()
+let DeFamilie = new Familie(personsFromStorage);
+updateFamilyTreeOnWebpage();
 
 
 DeDatabase.storeAllPersons();

@@ -24,3 +24,11 @@ function ageTotal(){
     
     return partOfFam
   }
+
+  oudste(){
+    return this.sortAge()[0]
+  }
+  
+  jongste(){
+    return this.sortAge()[this.aantalPersonen() - 1]
+  }
