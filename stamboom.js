@@ -16,8 +16,7 @@ class Familie {
   addPersoon(persoon){
     persoon.id = this.aantalPersonen() + 1
     this.personen[persoon.id] = persoon;
-    updateSamenvatting()
-    DeDatabase.storeAllPersons()
+    updateSamenvatting(this.aantalPersonen())
     updatenVanStamboomWeergave()
   }
 
@@ -25,18 +24,16 @@ class Familie {
     return this.personen.length
   }
 
-  // this.gesorteerdePersonen = this.sortAge()
-  // sorteren op basis van jaartal? oudste is niet altijd de eerst geboren persoon.
   sortAge(){
-    return this.personen.sort((jong, oud) => jong.bepaalLeeftijdVanPersoon() - oud.bepaalLeeftijdVanPersoon())
+    return this.personen.sort((jong, oud) => jong.birthday - oud.birthday)
   }
   
   oudste(){
-    return this.gesorteerdePersonen[0]
+    return this.sortAge()[0]
   }
   
   jongste(){
-    return this.gesorteerdePersonen[this.aantalPersonen() - 1]
+    return this.sortAge()[this.aantalPersonen() - 1]
   }
 };
 
@@ -139,9 +136,8 @@ function nieuwPersoonToevoegen(){
 
 };
 
-function updateSamenvatting() {
+function updateSamenvatting(aantalPersonen) {
   const samenvatting = document.getElementById('samenvatting')
-  const aantalPersonen = DeFamilie.aantalPersonen()
 
   let samenvattingTekst = () => {
     if (aantalPersonen === 1 ){
@@ -153,7 +149,6 @@ function updateSamenvatting() {
   }
   samenvatting.innerHTML = samenvattingTekst()
 };
-
 
 function algemeneMelding(tekst){
   const meldingElement = document.getElementById('melding')
@@ -181,8 +176,10 @@ function updatenVanStamboomWeergave(){
 };
 
 // begin van de stamboom website
-const DeDatabase = new Database();
-const personenUitStorage = DeDatabase.getAllPersons()
-const DeFamilie = new Familie(personenUitStorage);
+let DeDatabase = new Database();
+let personenUitStorage = DeDatabase.getAllPersons()
+let DeFamilie = new Familie(personenUitStorage);
 updatenVanStamboomWeergave();
 
+
+DeDatabase.storeAllPersons();
