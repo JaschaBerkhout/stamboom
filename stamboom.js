@@ -1,13 +1,23 @@
 class Familie {
-  constructor(){
+  constructor(personenUitStorage){
     this.personen = []
+    if(personenUitStorage === null) {
+      return;
+    }
+      personenUitStorage.forEach(persoon => {
+        if(persoon === null) {
+          return;
+    } 
+      this.addPersoon(
+      new Persoon(persoon.fname, persoon.lname, persoon.gender,persoon.birthday,persoon.deathday))
+    })
   }
 
   addPersoon(persoon){
     persoon.id = this.aantalPersonen() + 1
     this.personen[persoon.id] = persoon;
     updateSamenvatting()
-    NewDatabase.addToStorage()
+    DeDatabase.storeAllPersons()
     updatenVanStamboomWeergave()
   }
 
@@ -28,7 +38,6 @@ class Familie {
   jongste(){
     return this.gesorteerdePersonen[this.aantalPersonen() - 1]
   }
-
 };
 
 class Persoon {
@@ -85,38 +94,21 @@ class Persoon {
   }  
 };
 
-class database {
-  constructor(){
-    this.database = []
-  }
+class Database {
+  constructor(){}
 
-  addToStorage(){
-    DeFamilie.personen.forEach(persoon => window.localStorage.setItem('persoon['+persoon.id+']', JSON.stringify(persoon)))
+  storeAllPersons(){
+    //DeFamilie.personen.forEach(persoon => window.localStorage.setItem('persoon['+persoon.id+']', JSON.stringify(persoon)))
+    window.localStorage.setItem('personen', JSON.stringify(DeFamilie.personen))
   }
   
-  getFromStorage(){
+  getAllPersons(){
     return JSON.parse(window.localStorage.getItem('personen'))
   }
-  
-  bouwFamilieVanStorage = () => {
-    
-    const personenUitStorage = this.getFromStorage()
-    if(personenUitStorage === null) {
-      return;
-    }
-      personenUitStorage.forEach(persoon => {
-        if(persoon === null) {
-          return;
-    } 
-      DeFamilie.addPersoon(
-      new Persoon(persoon.fname, persoon.lname, persoon.gender,persoon.birthday,persoon.deathday))
-    })
-  }
-};
+ };
 
 function nieuwPersoonToevoegen(){
   
-  // waarom defineren we hier niet gelijk de .value ipv eerst het element en daarna de value? (met uitzondering van gender)
   const fnameElement = document.getElementById('fname');
   const lnameElement = document.getElementById('lname');
   const genderElement = document.querySelector('input[name="gender"]:checked');
@@ -177,13 +169,6 @@ function meldingNieuwPersoon(persoon) {
  algemeneMelding(`${persoon.fname} is toegevoegd aan de familie ${persoon.lname}.`);
 };
 
-
-// begin van de stamboom website
-const DeFamilie = new Familie();
-const NewDatabase = new database();
-NewDatabase.bouwFamilieVanStorage();
-updatenVanStamboomWeergave();
-
 function allesVanDeFamilie() {
   let result = '';
   DeFamilie.personen.forEach(persoon => result += persoon.personCard())
@@ -194,3 +179,10 @@ function updatenVanStamboomWeergave(){
   const personenElement = document.getElementById('personen');
   personenElement.innerHTML = allesVanDeFamilie();
 };
+
+// begin van de stamboom website
+const DeDatabase = new Database();
+const personenUitStorage = DeDatabase.getAllPersons()
+const DeFamilie = new Familie(personenUitStorage);
+updatenVanStamboomWeergave();
+
