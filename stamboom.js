@@ -167,11 +167,19 @@ function updateFamilyTreeOnWebpage(){
   personenElement.innerHTML = allOfTheFamily();
 };
 
+function removePersonFromLocalStorage(id){
+  window.localStorage.removeItem(id);
+}
+
+function removeLocalStorage(){
+  window.localStorage.clear();
+}
+
+
 // begin van de stamboom website
 let DeDatabase = new Database();
 let personsFromStorage = DeDatabase.getAllPersons()
 let DeFamilie = new Familie(personsFromStorage);
 updateFamilyTreeOnWebpage();
-
 
 DeDatabase.storeAllPersons();
