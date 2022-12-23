@@ -94,6 +94,15 @@ class Database {
   getAllPersons(){
     return JSON.parse(window.localStorage.getItem('personen'))
   }
+
+  //verwijderd nu key:value helemaal.. moet alleen value worden.
+  removePersonFromLocalStorage(id){
+    window.localStorage.removeItem('personen',id);
+  }
+  
+  removeLocalStorage(){
+    window.localStorage.clear('personen');
+  }
  };
 
 function createNewPerson(){
@@ -166,14 +175,6 @@ function updateFamilyTreeOnWebpage(){
   const personenElement = document.getElementById('personen');
   personenElement.innerHTML = allOfTheFamily();
 };
-
-function removePersonFromLocalStorage(id){
-  window.localStorage.removeItem(id);
-}
-
-function removeLocalStorage(){
-  window.localStorage.clear();
-}
 
 
 // begin van de stamboom website
