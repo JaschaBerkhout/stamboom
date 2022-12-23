@@ -14,7 +14,7 @@ class Familie {
   }
 
   addPersoon(persoon){
-    persoon.id = this.aantalPersonen() + 1
+    persoon.id = this.aantalPersonen()
     this.personen[persoon.id] = persoon;
     updateSamenvatting(this.aantalPersonen())
     updatenVanStamboomWeergave()
