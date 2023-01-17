@@ -1,0 +1,39 @@
+body {
+    background-color: aquamarine;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 20px;
+}
+
+.header {
+    height: 200px;
+    position: relative;
+}
+
+.header-image {
+    position: absolute;
+    right: 0;
+}
+
+.header-image>img {
+    height: 200px;
+    float: right;
+}
+
+.form {
+    max-width: 50%;
+}
+
+form>input {
+    border-radius: 3px;
+}
+
+.personen {
+    margin-top: 12px;
+}
+
+@media only screen and (max-width: 620px) {
+    /* For mobile phones: */
+    .menu, .main, .right,.footer {
+        width: 100%;
+    }
+};
